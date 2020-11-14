@@ -20,15 +20,27 @@ private:
 
 	vector<Matrix<unsigned long long int>>weights;
 
-	vector<Matrix<pair<int, int>>>wayes;
+	vector<Matrix<vector<pair<int, int>>>>wayes;
 
+	void Set_Default_Matrixes(Matrix<unsigned long long int>*weights, Matrix<vector<pair<int, int>>>*wayes);
 
 public:
 
 	Graph(int amount_of_Nodes);
 
-	void Add_Edge(int nomer_of_node, int weight);
-	void Add_Edge(string name, int weight);
+	void Add_Node_Name(string name);
+
+	void Add_Edge(int nomer_of_node, int weight, int nomer_of_where_directed);
+
+	void Add_Edge(string name, int weight, string name_of_where_directed);
+
+	void Show_Grpah_in_List_Style();
+
+	void Canculate_Weights_and_Ways_Between_Nodes();
+
+	void Show_Result_in_Deikstra_Style();
+
+	void Show_Result_in_Floyd_Style();
 
 
 

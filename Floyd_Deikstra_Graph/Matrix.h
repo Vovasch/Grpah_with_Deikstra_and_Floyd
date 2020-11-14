@@ -12,7 +12,7 @@ template <typename T>
 class Matrix {
 protected:
 
-	vector<vector<T>> matrix;
+	T** matrix;
 	int strings;
 	int comumns;
 
@@ -33,6 +33,12 @@ Matrix<T>::Matrix(int strings, int columns)
 	this->strings = strings;
 	this->comumns = columns;
 
+	this->matrix = new T*[strings];
+
+	for (int i = 0; i < strings; i++)
+	{
+		this->matrix[i] = new T[columns];
+	}
 }
 
 template<typename T>
