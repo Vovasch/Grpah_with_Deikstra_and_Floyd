@@ -16,6 +16,8 @@ private:
 
 	vector<string> Names_of_Nodes;
 
+	vector<unsigned long long int> distances_From_Begging;
+
 	bool if_Can_Use_Deikstra_Algorithm; // if edge < 0 we can't use Deikstra Algorithm
 
 	vector<Matrix<unsigned long long int>>weights;
@@ -36,7 +38,9 @@ public:
 
 	void Show_Grpah_in_List_Style();
 
-	void Canculate_Weights_and_Ways_Between_Nodes();
+	void Canculate_Weights_and_Ways_Between_Nodes_by_Floyd();
+
+	void Canculate_with_Deikstra();
 
 	void Show_Result_in_Deikstra_Style();
 

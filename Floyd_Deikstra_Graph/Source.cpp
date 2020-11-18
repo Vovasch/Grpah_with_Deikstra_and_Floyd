@@ -10,7 +10,29 @@ using namespace std;
 int main()
 {
 	Graph *Deikstri_Grahp = new Graph(12);
+	Graph* Floyd_Graph = new Graph(5);
 
+	
+
+	Floyd_Graph->Add_Edge(0, 5, 1);
+	Floyd_Graph->Add_Edge(1, 5, 0);
+	Floyd_Graph->Add_Edge(1, 7, 2);
+	Floyd_Graph->Add_Edge(2, 7, 1);
+	Floyd_Graph->Add_Edge(2, 6, 0);
+	Floyd_Graph->Add_Edge(0, 2, 2);
+	Floyd_Graph->Add_Edge(3, 1, 0);
+	Floyd_Graph->Add_Edge(0, 1, 3);
+	Floyd_Graph->Add_Edge(3, 6, 4);
+	Floyd_Graph->Add_Edge(3, 3, 4);
+	Floyd_Graph->Add_Edge(1, 4, 4);
+	Floyd_Graph->Add_Edge(4, 2, 1);
+	Floyd_Graph->Add_Edge(4, 6, 2);
+
+	Floyd_Graph->Show_Grpah_in_List_Style();
+
+	Floyd_Graph->Canculate_Weights_and_Ways_Between_Nodes_by_Floyd();
+
+	Floyd_Graph->Show_Result_in_Floyd_Style();
 
 	Deikstri_Grahp->Add_Node_Name("A");
 	Deikstri_Grahp->Add_Node_Name("F");
