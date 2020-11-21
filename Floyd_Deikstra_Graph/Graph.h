@@ -20,9 +20,9 @@ private:
 
 	bool if_Can_Use_Deikstra_Algorithm; // if edge < 0 we can't use Deikstra Algorithm
 
-	vector<Matrix<unsigned long long int>>weights;
+	vector<Matrix<unsigned long long int>>all_Weights;
 
-	vector<Matrix<vector<pair<int, int>>>>wayes;
+	vector<Matrix<vector<pair<int, int>>>>all_Ways;
 
 	void Set_Default_Matrixes(Matrix<unsigned long long int>*weights, Matrix<vector<pair<int, int>>>*wayes);
 
@@ -45,7 +45,4 @@ public:
 	void Show_Result_in_Deikstra_Style();
 
 	void Show_Result_in_Floyd_Style();
-
-
-
 };
