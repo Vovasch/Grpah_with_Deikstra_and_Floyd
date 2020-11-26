@@ -9,11 +9,30 @@ using namespace std;
 
 int main()
 {
+
+	//here is grpah from presentation
+	//i tested if my algorithm working correctly
+	/*Graph* test = new Graph(4);
+
+	test->Add_Edge(0, 1, 1);
+	test->Add_Edge(1, 7, 2);
+	test->Add_Edge(2, 2, 3);
+	test->Add_Edge(3, 1, 0);
+	test->Add_Edge(0, 2, 2);
+	test->Add_Edge(2, 6, 0);
+	test->Add_Edge(0, 1, 3);
+	test->Add_Edge(3, 4, 2);
+	test->Add_Edge(2, 5, 1);
+	test->Add_Edge(1, 2, 0);
+
+	test->Show_Grpah_in_List_Style();
+
+	test->Canculate_Weights_and_Ways_Between_Nodes_by_Floyd();
+	test->Show_Result_in_Floyd_Style();*/
+
 	Graph *Deikstri_Grahp = new Graph(12);
 
 	Graph* Floyd_Graph = new Graph(5);
-
-	
 
 	Deikstri_Grahp->Add_Node_Name("A");
 	Deikstri_Grahp->Add_Node_Name("F");
@@ -95,6 +114,50 @@ int main()
 		cin >> value; cout << " ";
 		Deikstri_Grahp->Add_Edge("I", value, "E");
 		
+		//doint the same that is above but i don't need to reenter it every time
+
+		/*Deikstri_Grahp->Add_Edge("A", 8, "F");
+		
+		Deikstri_Grahp->Add_Edge("F", 9, "H");
+		
+		Deikstri_Grahp->Add_Edge("H", 17, "B");
+		
+		Deikstri_Grahp->Add_Edge("A", 13, "Z");
+		
+		Deikstri_Grahp->Add_Edge("A", 12, "L");
+		
+		Deikstri_Grahp->Add_Edge("F", 6, "L");
+		
+		Deikstri_Grahp->Add_Edge("H", 1, "M");
+		
+		Deikstri_Grahp->Add_Edge("M", 1, "B");
+		
+		Deikstri_Grahp->Add_Edge("B", 17, "K");
+		
+		Deikstri_Grahp->Add_Edge("Z", 8, "L");
+		
+		Deikstri_Grahp->Add_Edge("L", 13, "M");
+	
+		Deikstri_Grahp->Add_Edge("M", 12, "K");
+		
+		Deikstri_Grahp->Add_Edge("Z", 13, "D");
+		
+		Deikstri_Grahp->Add_Edge("D", 18, "L");
+		
+		Deikstri_Grahp->Add_Edge("L", 14, "J");
+		
+		Deikstri_Grahp->Add_Edge("M", 17, "I");
+		
+		Deikstri_Grahp->Add_Edge("M", 11, "E");
+		
+		Deikstri_Grahp->Add_Edge("K", 19, "E");
+		
+		Deikstri_Grahp->Add_Edge("D", 9, "J");
+		
+		Deikstri_Grahp->Add_Edge("J", 5, "I");
+		
+		Deikstri_Grahp->Add_Edge("I", 3, "E");*/
+
 		system("cls");
 
 		cout << "This is your graph" << endl;
@@ -102,6 +165,8 @@ int main()
 		Deikstri_Grahp->Show_Grpah_in_List_Style();
 
 		Deikstri_Grahp->Canculate_Weights_and_Ways_Between_Nodes_by_Floyd();
+
+		Deikstri_Grahp->Show_Result_in_Floyd_Style();
 
 		break;
 	
@@ -138,8 +203,8 @@ int main()
 
 			Floyd_Graph->Add_Edge(nodes[i].first,x, nodes[i].second);
 		}
-
-		/*Floyd_Graph->Add_Edge(0, 5, 1);
+		//doint the same that is above but i don't need to reenter it every time
+	/*	Floyd_Graph->Add_Edge(0, 5, 1);
 		Floyd_Graph->Add_Edge(1, 5, 0);
 		Floyd_Graph->Add_Edge(1, 7, 2);
 		Floyd_Graph->Add_Edge(2, 7, 1);
