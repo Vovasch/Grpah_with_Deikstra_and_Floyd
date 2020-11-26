@@ -12,7 +12,8 @@ int main()
 
 	//here is grpah from presentation
 	//i tested if my algorithm working correctly
-	/*Graph* test = new Graph(4);
+
+	Graph* test = new Graph(4);
 
 	test->Add_Edge(0, 1, 1);
 	test->Add_Edge(1, 7, 2);
@@ -28,7 +29,7 @@ int main()
 	test->Show_Grpah_in_List_Style();
 
 	test->Canculate_Weights_and_Ways_Between_Nodes_by_Floyd();
-	test->Show_Result_in_Floyd_Style();*/
+	test->Show_Result_in_Floyd_Style();
 
 	Graph *Deikstri_Grahp = new Graph(12);
 

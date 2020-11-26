@@ -77,7 +77,7 @@ void Graph::Show_Matrix_of_Ways(int nomer)
 				if (f < 0 || s < 0)// if(-1,-1) means there is no way to show
 					cout << "     ";
 				else
-					cout << "(" << it[c].first << "," << it[c].second << ")";
+					cout << "(" << it[c].first + 1 << "," << it[c].second + 1 << ")";
 			}
 			cout << " / ";
 		}
@@ -118,7 +118,7 @@ void Graph::Show_Canculation(int nomer_of_Matrix)
 		{
 			for (int e = 0; e < this->amount_of_Nodes; e++)
 			{
-				cout <<"1d("<<i<<"," << e << ") = min (0d("<<i<< "," <<nomer_of_Matrix<<") + 0d(" << nomer_of_Matrix <<"," << e <<")"<<", 0d(" << i <<"," << e <<") = "
+				cout <<"1d("<<i+1<<"," << e+1 << ") = min (0d("<<i+1<< "," <<nomer_of_Matrix+1<<") + 0d(" << nomer_of_Matrix+1 <<"," << e+1 <<")"<<", 0d(" << i+1 <<"," << e+1 <<") = "
 					<< "min(" << this->zero_matrix_of_ways->Get_Value(i, nomer_of_Matrix) << " + " << this->zero_matrix_of_ways->Get_Value(nomer_of_Matrix, e) << ", " <<
 					this->zero_matrix_of_ways->Get_Value(i, e) << ") = " << this->all_Weights[0].Get_Value(i,e) << endl;
 			}
@@ -132,7 +132,7 @@ void Graph::Show_Canculation(int nomer_of_Matrix)
 		{
 			for (int e = 0; e < this->amount_of_Nodes; e++)
 			{
-				cout << nomer_of_Matrix +1  <<"d(" << i << "," << e << ") = min ("<< nomer_of_Matrix<<"d(" << i << "," << nomer_of_Matrix << ") + "<< nomer_of_Matrix<< "d(" << nomer_of_Matrix << "," << e << ")" << ", " << nomer_of_Matrix<< "d(" << i << "," << e << ") = "
+				cout << nomer_of_Matrix +1<<"d(" << i+1 << "," << e+1 << ") = min ("<< nomer_of_Matrix<<"d(" << i+1 << "," << nomer_of_Matrix+1 << ") + "<< nomer_of_Matrix<< "d(" << nomer_of_Matrix+1 << "," << e+1 << ")" << ", " << nomer_of_Matrix<< "d(" << i+1 << "," << e+1 << ") = "
 					<< "min(" << this->all_Weights[nomer_of_Matrix - 1].Get_Value(i, nomer_of_Matrix) << " + " << this->all_Weights[nomer_of_Matrix - 1].Get_Value(nomer_of_Matrix, e) << ", " <<
 					this->all_Weights[nomer_of_Matrix - 1].Get_Value(i, e) << ") = " << this->all_Weights[nomer_of_Matrix].Get_Value(i,e)<< endl;
 			}
@@ -278,7 +278,7 @@ void Graph::Canculate_Weights_and_Ways_Between_Nodes_by_Floyd()
 
 				curent_matrix_wayes.Push_Value(vect_for_ways, i, j);
 			}
-			else if(prev < Max_size_of_unsigned_long_long_int)
+			else if(prev < Max_size_of_unsigned_long_long_int )
 			{
 				pair_of_nodes.first = i;
 				pair_of_nodes.second = j;
