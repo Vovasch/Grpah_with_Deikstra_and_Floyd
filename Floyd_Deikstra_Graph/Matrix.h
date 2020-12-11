@@ -22,16 +22,11 @@ public:
 
 	Matrix(const Matrix& matrix);
 
-	void Push_Value(T value, int string, int column);
+	void Push_Value(T value, int string, int column) {	matrix[string][column] = value;	}
 
-	inline T Get_Value(int string, int column) const
-	{
-		return this->matrix[string][column];
-	}
+	inline T Get_Value(int string, int column) const { return this->matrix[string][column]; }
 
 	void operator=(const Matrix& matrix);
-
-
 };
 
 template<typename T>
@@ -43,9 +38,7 @@ Matrix<T>::Matrix(int strings, int columns)
 	this->matrix = new T*[strings];
 
 	for (int i = 0; i < strings; i++)
-	{
 		this->matrix[i] = new T[columns];
-	}
 }
 
 template<typename T>
@@ -59,21 +52,11 @@ inline Matrix<T>::Matrix(const Matrix& matrix)
 	for (int i = 0; i < this->strings; i++)
 		this->matrix[i] = new T[this->columns];
 
-
 	for (int i = 0; i < this->strings; i++)
 	{
 		for (int e = 0; e < this->columns; e++)
-		{
 			this->matrix[i][e] = matrix.Get_Value(i, e);
-		}
 	}
-
-}
-
-template<typename T>
-void Matrix<T>::Push_Value(T value, int string, int column)
-{
-	matrix[string][column] = value;
 }
 
 template<typename T>
@@ -92,11 +75,4 @@ inline void Matrix<T>::operator=(const Matrix& matrix)
 			this->matrix[i][e] = matrix.Get_Value(i, e);
 		}
 	}
-
 }
-
-//template<typename T>
-//T Matrix<T>::Get_Value(int string, int column)
-//{
-//	return this->matrix[string][column];
-//}

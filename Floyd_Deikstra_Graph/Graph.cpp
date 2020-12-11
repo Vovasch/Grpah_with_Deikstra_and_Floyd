@@ -1,16 +1,17 @@
  #include "Graph.h"
 #include "Matrix.h"
-#define Max_size_of_unsigned_long_long_int 18446744073709551
+
+#define A_Big_Number 99999999
 
 using namespace std;
 
-void Graph::Set_Default_Matrix_of_Weights(Matrix<unsigned long long int>* weights)
+void Graph::Set_Default_Matrix_of_Weights(Matrix< long long int>* weights)
 {
 	for (int i = 0; i < amount_of_Nodes; i++)
 	{
 		for (int e = 0; e < amount_of_Nodes; e++)
 		{
-			weights->Push_Value(Max_size_of_unsigned_long_long_int, i, e);
+			weights->Push_Value(A_Big_Number, i, e);
 			
 			if (i == e)
 				weights->Push_Value(0, i, e);
@@ -43,8 +44,8 @@ void Graph::Show_Matrix_of_Weights(int nomer)
 	{
 		for (int k = 0; k < this->amount_of_Nodes; k++)
 		{
-			unsigned long long int a = this->all_Weights[nomer].Get_Value(e, k);
-			if (a >= Max_size_of_unsigned_long_long_int)
+			 long long int a = this->all_Weights[nomer].Get_Value(e, k);
+			if (a >= A_Big_Number)
 				cout << "  " << "i";
 			else
 			{
@@ -92,8 +93,8 @@ void Graph::Show_Zero_Matrix()
 	{
 		for (int k = 0; k < this->amount_of_Nodes; k++)
 		{
-			unsigned long long int a = this->zero_matrix_of_ways->Get_Value(e, k);
-			if (a >= Max_size_of_unsigned_long_long_int)
+			 long long int a = this->zero_matrix_of_ways->Get_Value(e, k);
+			if (a >= A_Big_Number)
 				cout << "  " << "i";
 			else
 			{
@@ -102,7 +103,6 @@ void Graph::Show_Zero_Matrix()
 				else
 					cout << " " << a;
 			}
-
 		}
 		cout << endl;
 	}
@@ -111,16 +111,31 @@ void Graph::Show_Zero_Matrix()
 
 void Graph::Show_Canculation(int nomer_of_Matrix)
 {
-
 	if (nomer_of_Matrix == 0)
 	{
 		for (int i = 0; i < this->amount_of_Nodes; i++)
 		{
 			for (int e = 0; e < this->amount_of_Nodes; e++)
 			{
-				cout <<"1d("<<i+1<<"," << e+1 << ") = min (0d("<<i+1<< "," <<nomer_of_Matrix+1<<") + 0d(" << nomer_of_Matrix+1 <<"," << e+1 <<")"<<", 0d(" << i+1 <<"," << e+1 <<") = "
+				cout << "1d(" << i + 1 << "," << e + 1 << ") = min (0d(" << i + 1 << "," << nomer_of_Matrix + 1 << ") + 0d(" << nomer_of_Matrix + 1 << "," << e + 1 << ")" <<
+					", 0d(" << i + 1 << "," << e + 1 << ") = "
 					<< "min(" << this->zero_matrix_of_ways->Get_Value(i, nomer_of_Matrix) << " + " << this->zero_matrix_of_ways->Get_Value(nomer_of_Matrix, e) << ", " <<
-					this->zero_matrix_of_ways->Get_Value(i, e) << ") = " << this->all_Weights[0].Get_Value(i,e) << endl;
+					this->zero_matrix_of_ways->Get_Value(i, e) << ") = " << this->all_Weights[0].Get_Value(i, e) << " / ";
+					
+				for (auto it : this->all_Ways[nomer_of_Matrix].Get_Value(i, e))
+				{
+					int first, second;
+					first = it.first;
+					second = it.second;
+
+					if (first < 0 || second < 0)
+						continue;
+					
+					cout << "(" << first+1 << ", " << second+1 << ") ";
+				}
+
+
+				cout << endl;
 			}
 			cout << endl;
 		}
@@ -132,32 +147,147 @@ void Graph::Show_Canculation(int nomer_of_Matrix)
 		{
 			for (int e = 0; e < this->amount_of_Nodes; e++)
 			{
-				cout << nomer_of_Matrix +1<<"d(" << i+1 << "," << e+1 << ") = min ("<< nomer_of_Matrix<<"d(" << i+1 << "," << nomer_of_Matrix+1 << ") + "<< nomer_of_Matrix<< "d(" << nomer_of_Matrix+1 << "," << e+1 << ")" << ", " << nomer_of_Matrix<< "d(" << i+1 << "," << e+1 << ") = "
+				cout << nomer_of_Matrix +1<<"d(" << i+1 << "," << e+1 << ") = min ("<< nomer_of_Matrix<<"d(" << i+1 << "," << nomer_of_Matrix+1 << ") + "<< nomer_of_Matrix<< "d(" << nomer_of_Matrix+1 << "," << e+1 << ")" 
+					<< ", " << nomer_of_Matrix<< "d(" << i+1 << "," << e+1 << ") = "
 					<< "min(" << this->all_Weights[nomer_of_Matrix - 1].Get_Value(i, nomer_of_Matrix) << " + " << this->all_Weights[nomer_of_Matrix - 1].Get_Value(nomer_of_Matrix, e) << ", " <<
-					this->all_Weights[nomer_of_Matrix - 1].Get_Value(i, e) << ") = " << this->all_Weights[nomer_of_Matrix].Get_Value(i,e)<< endl;
+					this->all_Weights[nomer_of_Matrix - 1].Get_Value(i, e) << ") = " << this->all_Weights[nomer_of_Matrix].Get_Value(i,e)<< " // ";
+
+				for (auto it : this->all_Ways[nomer_of_Matrix].Get_Value(i, e))
+				{
+					int first, second;
+					first = it.first;
+					second = it.second;
+
+					if (first < 0 || second < 0)
+						continue;
+
+					cout << "(" << first + 1 << ", " << second + 1 << ") ";
+				}
+				cout << endl;
 			}
 			cout << endl;
 		}
 	}
 }
 
+void Graph::Building_Way_by_Results_From_Floyd_Algrithm(int i, int j, vector<pair<int, int>>* way)
+{
+	if (this->all_Ways.rbegin()->Get_Value(i, j).size() > 1)
+	{
+		for (auto i : this->all_Ways.rbegin()->Get_Value(i, j))
+		{
+			this->Building_Way_by_Results_From_Floyd_Algrithm(i.first, i.second, way);
+		}
+	}
+	else
+	{
+		way->push_back(*all_Ways.rbegin()->Get_Value(i, j).begin());
+	}
+}
+
+vector<pair<int, int>> Graph::Get_Way_Between_Nodes(int nomer_of_starting_node, int nomer_of_targed_node)
+{
+	vector<pair<int, int>> way_we_are_building;
+
+	pair<int, int> starting_node;
+
+	starting_node.first = -1;
+	starting_node.second = nomer_of_starting_node;
+
+	way_we_are_building.push_back(starting_node);
+
+	this->Building_Way_by_Results_From_Floyd_Algrithm(nomer_of_starting_node, nomer_of_targed_node, &way_we_are_building);
+
+	return way_we_are_building;
+}
+
+int Graph::Get_Nomer_of_Node_with_the_Smallest_Dist_from_Beging()
+{
+	int the_smallest_dist = 9999999993483999999;
+
+	vector<Node>::iterator node;
+
+	for (auto it = this->nodes.begin(); it != this->nodes.end(); ++it)
+	{
+		if (the_smallest_dist > it->distance_from_beginning)
+		{
+			if (it->already_Canculated_by_Dejkstra_algr)
+				continue;
+			the_smallest_dist = it->distance_from_beginning;
+			node = it;
+		}
+	}
+	return distance(this->nodes.begin(), node);
+}
+
+void Graph::Canlulate_by_Dejkstra_algrithm(int nomer_of_starting_node, int nomer_of_targed_node)
+{
+
+	this->nodes[nomer_of_starting_node].distance_from_beginning = 0;
+
+	int nomer_of_Node_We_are_Working_With = this->Get_Nomer_of_Node_with_the_Smallest_Dist_from_Beging();
+
+	int a = nodes[nomer_of_Node_We_are_Working_With].distance_from_beginning;
+
+	for (int i = 0; i < amount_of_Nodes; i++)
+	{
+		int b = this->zero_matrix_of_ways->Get_Value(nomer_of_Node_We_are_Working_With, i);
+		if (b == A_Big_Number)
+			continue;
+		
+		b += a;
+		int c = this->nodes[i].distance_from_beginning;
+
+		if (b < c)
+		{
+			this->nodes[i].distance_from_beginning = c;
+			this->nodes[i].nomer_of_Previous_Node = nomer_of_Node_We_are_Working_With;
+		}
+
+	}
+
+}
+
+void Graph::Canlulate_by_Dejkstra_algrithm(string name_of_starting_node, string name_of_targed_node)
+{
+	Canlulate_by_Dejkstra_algrithm(this->Get_Nomer_of_Node_by_its_Name(name_of_starting_node), this->Get_Nomer_of_Node_by_its_Name(name_of_targed_node));
+}
+
+int Graph::Get_Nomer_of_Node_by_its_Name(string name)
+{
+
+	//for (auto i : this->nodes)
+	for(auto i = this->nodes.begin(); i != this->nodes.end(); ++i)
+	{
+		if (i->Name_of_Node == name)
+			return distance(this->nodes.begin(), i);
+	}
+
+	return 0;
+}
+
+
 Graph::Graph(int amount_of_Nodes)
 {
-	this->Names_of_Nodes.reserve(amount_of_Nodes);
+	this->amount_of_Nodes = amount_of_Nodes;
+	
+	this->nodes.reserve(amount_of_Nodes);
+
+	Node node;
+
+	this->nodes.insert(this->nodes.begin(),amount_of_Nodes, node);
 	
 	this->if_Can_Use_Deikstra_Algorithm = 1;
 
-	this->amount_of_Nodes = amount_of_Nodes;
-
-	this->zero_matrix_of_ways = new Matrix<unsigned long long int>(amount_of_Nodes, amount_of_Nodes);
+	this->zero_matrix_of_ways = new Matrix< long long int>(amount_of_Nodes, amount_of_Nodes);
 
 	this->Set_Default_Matrix_of_Weights(this->zero_matrix_of_ways);
 	
 }
 
-void Graph::Add_Node_Name(string name)
+void Graph::Add_Node_Name(string name, int nomer_of_Node)
 {
-	this->Names_of_Nodes.push_back(name);
+	this->nodes[nomer_of_Node].Name_of_Node = name;
 }
 
 void Graph::Add_Edge(int nomer_of_node, int weight, int nomer_of_where_directed)
@@ -170,75 +300,49 @@ void Graph::Add_Edge(int nomer_of_node, int weight, int nomer_of_where_directed)
 
 void Graph::Add_Edge(string name, int weight, string name_of_where_directed)
 {
-	vector<string>::iterator it1 = find(this->Names_of_Nodes.begin(), this->Names_of_Nodes.end(), name);
-
-	vector<string>::iterator it2 = find(this->Names_of_Nodes.begin(), this->Names_of_Nodes.end(), name_of_where_directed);
-
-	int a, b;
-	a = distance(this->Names_of_Nodes.begin(), it1);
-	b = distance(this->Names_of_Nodes.begin(), it2);
-
-	this->Add_Edge(distance(this->Names_of_Nodes.begin(), it1), weight, distance(this->Names_of_Nodes.begin(), it2));
+	this->Add_Edge(this->Get_Nomer_of_Node_by_its_Name(name), weight, this->Get_Nomer_of_Node_by_its_Name(name_of_where_directed));
 }
 
-void Graph::Show_Grpah_in_List_Style()
+void Graph::Show_Grpah()
 {
-
-	bool if_we_dont_have_names_of_nones = 0;
-
-	if (!this->Names_of_Nodes.size())
-	{
-		if_we_dont_have_names_of_nones = 1;
-		for (int i = 0; i < this->amount_of_Nodes; i++)
-			Names_of_Nodes.push_back("");
-	}
 	int nomer_of_step = 1;
 	
-	Matrix<unsigned long long int>m = *this->zero_matrix_of_ways;
+	Matrix< long long int>m = *this->zero_matrix_of_ways;
 	
-	string for_beauty_showing_of_Nodes, for_beauty_showing_of_Edges;
+	string for_beauty_showing_of_Edges;
 
 	for (int i = 0; i < amount_of_Nodes; i++)
 	{
-		for_beauty_showing_of_Nodes = "||";
+		this->nodes[i].Show_Node(i);
 
-		if(i > 9)
-			for_beauty_showing_of_Nodes.pop_back();
-
-		cout << "||" << this->Names_of_Nodes[i] << i << for_beauty_showing_of_Nodes;
 		for (int e = 0; e < this->amount_of_Nodes; e++)
 		{
 			for_beauty_showing_of_Edges = "--";
-			for_beauty_showing_of_Nodes = "||";
 
-			unsigned long long int weight = m.Get_Value(i, e);
+			 long long int weight = m.Get_Value(i, e);
 
-			if (weight > 9)
-				for_beauty_showing_of_Edges.pop_back();
+			if (weight > 9)								//--9-->                        --9-->
+				for_beauty_showing_of_Edges.pop_back(); //--10--> not beautiful so we take away one '-' -10-->
 
-			if (e > 9)
-				for_beauty_showing_of_Nodes.pop_back();
 
-			if (weight == Max_size_of_unsigned_long_long_int || weight == 0)
+			if (weight == A_Big_Number || weight == 0)
 				continue;
 			else
 			{
-				cout << " "<<for_beauty_showing_of_Edges << weight << "--> " << "||" << this->Names_of_Nodes[e] << e << for_beauty_showing_of_Nodes;
+				cout << " " << for_beauty_showing_of_Edges << "|"<<weight << "|--> "; 
+																						
+				this->nodes[i].Show_Node(i);
 			}
 		}
 		cout << endl;
 	}
-	if (if_we_dont_have_names_of_nones)
-	{
-		this->Names_of_Nodes.clear();
-		this->Names_of_Nodes.reserve(this->amount_of_Nodes);
-	}
+	
 	
 }
 
 void Graph::Canculate_Weights_and_Ways_Between_Nodes_by_Floyd()
 {
-	Matrix<unsigned long long int>matrix_of_weights(this->amount_of_Nodes, this->amount_of_Nodes);
+	Matrix< long long int>matrix_of_weights(this->amount_of_Nodes, this->amount_of_Nodes);
 	Matrix<vector<pair<int, int>>>curent_matrix_wayes(this->amount_of_Nodes, this->amount_of_Nodes);
 
 	this->Set_Default_Matrix_of_Weights(&matrix_of_weights);
@@ -257,7 +361,7 @@ void Graph::Canculate_Weights_and_Ways_Between_Nodes_by_Floyd()
 
 			vect_for_ways.clear();
 
-			unsigned long long int sum, prev;
+			 long long int sum, prev;
 			sum = matrix_of_weights.Get_Value(i, 0);
 			sum += matrix_of_weights.Get_Value(0, j);
 
@@ -278,7 +382,7 @@ void Graph::Canculate_Weights_and_Ways_Between_Nodes_by_Floyd()
 
 				curent_matrix_wayes.Push_Value(vect_for_ways, i, j);
 			}
-			else if(prev < Max_size_of_unsigned_long_long_int )
+			else if(prev < A_Big_Number )
 			{
 				pair_of_nodes.first = i;
 				pair_of_nodes.second = j;
@@ -304,7 +408,7 @@ void Graph::Canculate_Weights_and_Ways_Between_Nodes_by_Floyd()
 			{
 				vect_for_ways.clear();
 
-				unsigned long long int sum, prev;
+				long long int sum, prev;
 				sum = matrix_of_weights.Get_Value(i, n);
 				sum += matrix_of_weights.Get_Value(n, j);
 
@@ -330,41 +434,9 @@ void Graph::Canculate_Weights_and_Ways_Between_Nodes_by_Floyd()
 
 		this->all_Weights.push_back(matrix_of_weights);
 		this->all_Ways.push_back(curent_matrix_wayes);
-	}
+	} 
 }
 
-void Graph::Show_Way_Between_Nodes(int nomer_of_starting_node, int nomer_of_targed_node)
-{
-	vector<int> way_we_are_building;
-
-
-	auto curent_way = all_Ways.rbegin()->Get_Value(nomer_of_starting_node, nomer_of_targed_node);
-
-	for (auto it = curent_way.rbegin(); it != curent_way.rend(); ++it) 
-	{
-		way_we_are_building.push_back(it->second);
-	}
-
-	way_we_are_building.push_back(nomer_of_starting_node);
-
-	for (auto it = way_we_are_building.rbegin(); it != way_we_are_building.rend(); ++it)
-	{
-		cout << *it << " ";
-	}
-}
-
-void Graph::Show_Way_Between_Nodes(string nomer_of_starting_node, string nomer_of_targed_node)
-{
-	vector<string>::iterator it1 = find(this->Names_of_Nodes.begin(), this->Names_of_Nodes.end(), nomer_of_starting_node);
-
-	vector<string>::iterator it2 = find(this->Names_of_Nodes.begin(), this->Names_of_Nodes.end(), nomer_of_targed_node);
-
-	int a, b;
-	a = distance(this->Names_of_Nodes.begin(), it1);
-	b = distance(this->Names_of_Nodes.begin(), it2);
-
-	this->Show_Way_Between_Nodes(a, b);
-}
 
 void Graph::Show_Result_in_Floyd_Style()
 {
@@ -384,3 +456,4 @@ void Graph::Show_Result_in_Floyd_Style()
 		this->Show_Matrix_of_Ways(i);
 	}
 }
+
