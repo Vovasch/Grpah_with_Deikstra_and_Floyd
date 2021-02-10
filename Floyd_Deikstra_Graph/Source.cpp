@@ -59,6 +59,7 @@ int main()
 
 		Init_Names_of_Node_for_Grahp_from_3_lab(Deikstri_Grahp);
 
+		
 		//Graph_for_Lab_3_withtout_entering_form_UI(Deikstri_Grahp);
 
 
@@ -72,11 +73,13 @@ int main()
 
 		Deikstri_Grahp->Show_Grpah();
 
-		Deikstri_Grahp->Canculate_Weights_and_Ways_Between_Nodes_by_Floyd();
+		
 
 		cout << "Enter names of nodes, way between which need to be canculated" << endl;
 
 		cin >> Node1 >> Node2;
+
+		Deikstri_Grahp->Canlulate_by_Dejkstra_algrithm(Node1, Node2);
 
 		//Deikstri_Grahp->Show_Result_in_Floyd_Style();
 
@@ -137,50 +140,50 @@ void Graph_for_Lab_3_withtout_entering_form_UI(Graph* Deikstri_Grahp)
 {
 
 	//straight graph
-	Deikstri_Grahp->Add_Edge("A", 13, "F");
-	Deikstri_Grahp->Add_Edge("F", 14, "H");
-	Deikstri_Grahp->Add_Edge("H", 4, "B");
-	Deikstri_Grahp->Add_Edge("A", 10, "Z");
-	Deikstri_Grahp->Add_Edge("A", 9, "L");
-	Deikstri_Grahp->Add_Edge("F", 13, "L");
+	/*Deikstri_Grahp->Add_Edge("A", 8, "F");
+	Deikstri_Grahp->Add_Edge("F", 9,"H");
+	Deikstri_Grahp->Add_Edge("H", 17, "B");
+	Deikstri_Grahp->Add_Edge("A", 13, "Z");
+	Deikstri_Grahp->Add_Edge("A", 12, "L");
+	Deikstri_Grahp->Add_Edge("F", 6, "L");
 	Deikstri_Grahp->Add_Edge("H", 1, "M");
-	Deikstri_Grahp->Add_Edge("B", 19, "M");
-	Deikstri_Grahp->Add_Edge("B", 19, "K");
-	Deikstri_Grahp->Add_Edge("Z", 13, "L");
-	Deikstri_Grahp->Add_Edge("L", 5, "M");
-	Deikstri_Grahp->Add_Edge("M", 18, "K");
-	Deikstri_Grahp->Add_Edge("Z", 5, "D");
-	Deikstri_Grahp->Add_Edge("L", 16, "D");
-	Deikstri_Grahp->Add_Edge("L", 4, "J");
-	Deikstri_Grahp->Add_Edge("M", 13, "I");
-	Deikstri_Grahp->Add_Edge("M", 1, "E");
-	Deikstri_Grahp->Add_Edge("K", 5, "E");
-	Deikstri_Grahp->Add_Edge("D", 13, "J");
-	Deikstri_Grahp->Add_Edge("J", 9, "I");
-	Deikstri_Grahp->Add_Edge("I", 12, "E");
+	Deikstri_Grahp->Add_Edge("B", 1, "M");
+	Deikstri_Grahp->Add_Edge("B", 17, "K");
+	Deikstri_Grahp->Add_Edge("Z", 8, "L");
+	Deikstri_Grahp->Add_Edge("L", 13, "M");
+	Deikstri_Grahp->Add_Edge("M", 12, "K");
+	Deikstri_Grahp->Add_Edge("Z", 13, "D");
+	Deikstri_Grahp->Add_Edge("L", 18, "D");
+	Deikstri_Grahp->Add_Edge("L", 14, "J");
+	Deikstri_Grahp->Add_Edge("M", 17, "I");
+	Deikstri_Grahp->Add_Edge("M", 11, "E");
+	Deikstri_Grahp->Add_Edge("K", 19, "E");
+	Deikstri_Grahp->Add_Edge("D", 9, "J");
+	Deikstri_Grahp->Add_Edge("J", 5, "I");
+	Deikstri_Grahp->Add_Edge("I", 3, "E");*/
 
 	//reversed graph
-	Deikstri_Grahp->Add_Edge("F", 12, "A");
-	Deikstri_Grahp->Add_Edge("H", 10, "F");
-	Deikstri_Grahp->Add_Edge("B", 18, "H");
-	Deikstri_Grahp->Add_Edge("Z", 19, "A");
+	Deikstri_Grahp->Add_Edge("F", 8, "A");
+	Deikstri_Grahp->Add_Edge("H", 9, "F");
+	Deikstri_Grahp->Add_Edge("B", 17, "H");
+	Deikstri_Grahp->Add_Edge("Z", 13, "A");
 	Deikstri_Grahp->Add_Edge("L", 12, "A");
-	Deikstri_Grahp->Add_Edge("L", 9, "F");
-	Deikstri_Grahp->Add_Edge("M", 16, "H");
-	Deikstri_Grahp->Add_Edge("M", 12, "B");
-	Deikstri_Grahp->Add_Edge("K", 3, "B");
-	Deikstri_Grahp->Add_Edge("L", 10, "Z");
-	Deikstri_Grahp->Add_Edge("M", 10, "L");
-	Deikstri_Grahp->Add_Edge("K", 13, "M");
-	Deikstri_Grahp->Add_Edge("D", 3, "Z");
-	Deikstri_Grahp->Add_Edge("D", 1, "L");
-	Deikstri_Grahp->Add_Edge("J", 13, "L");
+	Deikstri_Grahp->Add_Edge("L", 6, "F");
+	Deikstri_Grahp->Add_Edge("M", 1, "H");
+	Deikstri_Grahp->Add_Edge("M", 1, "B");
+	Deikstri_Grahp->Add_Edge("K", 17, "B");
+	Deikstri_Grahp->Add_Edge("L", 8, "Z");
+	Deikstri_Grahp->Add_Edge("M", 13, "L");
+	Deikstri_Grahp->Add_Edge("K", 12, "M");
+	Deikstri_Grahp->Add_Edge("D", 13, "Z");
+	Deikstri_Grahp->Add_Edge("D", 18, "L");
+	Deikstri_Grahp->Add_Edge("J", 14, "L");
 	Deikstri_Grahp->Add_Edge("I", 17, "M");
-	Deikstri_Grahp->Add_Edge("E", 12, "M");
-	Deikstri_Grahp->Add_Edge("E", 7, "K");
-	Deikstri_Grahp->Add_Edge("J", 15, "D");
-	Deikstri_Grahp->Add_Edge("I", 14, "J");
-	Deikstri_Grahp->Add_Edge("E", 6, "I");	
+	Deikstri_Grahp->Add_Edge("E", 11, "M");
+	Deikstri_Grahp->Add_Edge("E", 19, "K");
+	Deikstri_Grahp->Add_Edge("J", 9, "D");
+	Deikstri_Grahp->Add_Edge("I", 5, "J");
+	Deikstri_Grahp->Add_Edge("E", 3, "I");	
 }
 
 void Graph_for_Lab_3_WITH_enterieng_from_UI(Graph* Deikstri_Grahp, bool straight_of_reserved)
@@ -191,7 +194,7 @@ void Graph_for_Lab_3_WITH_enterieng_from_UI(Graph* Deikstri_Grahp, bool straight
 		"So we have 21 adges, you need to enter every of them just from task,\n" <<
 		"clicking 'Enter' after every" << endl;
 
-	vector<pair<string, string>> pair_of_nodes = { {"A", "F"}, {"F", "H"},{"H","B"},{"A","Z"},{"A","L"},{"F","L"},{"H","M"},{"B","M"},{"B", "K"},{"Z","L"},{"L","M"},{"M","K"},{"Z","D"},{"L","D"},{"L","J"},{"M","I"},{"M","E"},{"K","E"},{"D","J"},{"J","I"},{"I","E"} };
+	vector<pair<string, string>> pair_of_nodes = { {"F", "A"}, {"F", "H"},{"H","B"},{"A","Z"},{"A","L"},{"F","L"},{"H","M"},{"B","M"},{"B", "K"},{"Z","L"},{"L","M"},{"M","K"},{"Z","D"},{"L","D"},{"L","J"},{"M","I"},{"M","E"},{"K","E"},{"D","J"},{"J","I"},{"I","E"} };
 
 	int value;
 

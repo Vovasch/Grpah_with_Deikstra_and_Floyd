@@ -47,6 +47,8 @@ private:
 
 	int Get_Nomer_of_Node_by_its_Name(string name);
 
+
+
 public:
 
 	Graph(int amount_of_Nodes);

@@ -217,6 +217,8 @@ int Graph::Get_Nomer_of_Node_with_the_Smallest_Dist_from_Beging()
 			node = it;
 		}
 	}
+
+
 	return distance(this->nodes.begin(), node);
 }
 
@@ -225,29 +227,75 @@ void Graph::Canlulate_by_Dejkstra_algrithm(int nomer_of_starting_node, int nomer
 
 	this->nodes[nomer_of_starting_node].distance_from_beginning = 0;
 
+
+
 	int nomer_of_Node_We_are_Working_With = this->Get_Nomer_of_Node_with_the_Smallest_Dist_from_Beging();
 
-	int a = nodes[nomer_of_Node_We_are_Working_With].distance_from_beginning;
-
-	for (int i = 0; i < amount_of_Nodes; i++)
+	while (nomer_of_Node_We_are_Working_With != -1)
 	{
-		int b = this->zero_matrix_of_ways->Get_Value(nomer_of_Node_We_are_Working_With, i);
-		if (b == A_Big_Number)
-			continue;
+		if (nomer_of_Node_We_are_Working_With == nomer_of_targed_node)
+			break;
+
+		int a = nodes[nomer_of_Node_We_are_Working_With].distance_from_beginning;
+
+		cout << endl;
+		this->nodes[nomer_of_Node_We_are_Working_With].Show_Node(nomer_of_Node_We_are_Working_With);
+		cout << endl << endl;
+
 		
-		b += a;
-		int c = this->nodes[i].distance_from_beginning;
 
-		if (b < c)
+		for (int i = 0; i < amount_of_Nodes; i++)
 		{
-			this->nodes[i].distance_from_beginning = c;
-			this->nodes[i].nomer_of_Previous_Node = nomer_of_Node_We_are_Working_With;
-		}
 
+			int b = this->zero_matrix_of_ways->Get_Value(nomer_of_Node_We_are_Working_With, i);
+
+			if (b >= A_Big_Number || i == nomer_of_Node_We_are_Working_With)
+				continue;
+
+			cout << "d(" << nodes[i].Name_of_Node << ") = min (d(" << nodes[i].Name_of_Node << "), (d(" << nodes[nomer_of_Node_We_are_Working_With].Name_of_Node << " + a(" <<
+				nodes[nomer_of_Node_We_are_Working_With].Name_of_Node << ", " << nodes[i].Name_of_Node << ") = ";
+
+			cout << "Min(" << b << " + " << a << ", ";
+
+			b += a;
+			int c = this->nodes[i].distance_from_beginning;
+
+			cout << c << ") = ";
+
+			if (b < c)
+			{
+				this->nodes[i].distance_from_beginning = b;
+				this->nodes[i].nomer_of_Previous_Node = nomer_of_Node_We_are_Working_With;
+				cout << b;
+			}
+			else
+				cout << c;
+
+			cout << endl;
+
+
+		}
+		this->nodes[nomer_of_Node_We_are_Working_With].already_Canculated_by_Dejkstra_algr = 1;
+
+		nomer_of_Node_We_are_Working_With = this->Get_Nomer_of_Node_with_the_Smallest_Dist_from_Beging();
+	}
+	vector<Node>way;
+
+	int nomer_that_we_is_previous = nomer_of_targed_node;
+
+	while (nomer_that_we_is_previous != nomer_of_starting_node)
+	{
+		way.push_back(nodes[nomer_that_we_is_previous]);
+		nomer_that_we_is_previous = nodes[nomer_that_we_is_previous].nomer_of_Previous_Node;
 	}
 
-}
+	way.push_back(nodes[nomer_of_starting_node]);
 
+	for (auto it = way.rbegin(); it != way.rend(); ++it)
+	{
+		cout << it->Name_of_Node << " ";
+	}
+}
 void Graph::Canlulate_by_Dejkstra_algrithm(string name_of_starting_node, string name_of_targed_node)
 {
 	Canlulate_by_Dejkstra_algrithm(this->Get_Nomer_of_Node_by_its_Name(name_of_starting_node), this->Get_Nomer_of_Node_by_its_Name(name_of_targed_node));
