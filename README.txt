@@ -1,13 +1,42 @@
-Here is a the realization of Floyd's and Deikstra algorithm
+Here is a the realization of Floyd's and Dijkstra algorithm
 
-Yes, it not satisfied  your requirements, but mine are satisfied, because this program made money for me. For instance, you can't add node or edge
-from UI, because there's no need for me. I didn't tried to write a complex program, it was create only to make money and get mark. (yes 30 grivnas it's money in 2020(more than 1$ actually)). 
+This program wasn't created for cancuating pathes in any graphs.
+It was created only to make laboratory work #3 and #4 using two
+algorighm, this is why there is no ability to make canculation
+on graph you may need.
 
-There is a formula for Floyds algorigthm:
+Let's start from Dijkstra.
 
-n - amount of nodes = amount of matrixes 
+     At first take a look at screenshot in folder Tasks, named Dijkstratask.jpg
+For every student graph is same except values of edges and beginning of graph
+And every student can choose a final node from three variants: B or K or F.
 
-[n] - it is nomer of matrix
+Yes, it's as strange as it seems, you can also see that graph isn't directed. 
+So I decided to make graph directed always from left to right and from up to bottom, 
+but this borns lots of exception situations where program can't find any possible 
+way to get to final node. So a half-mesure to solve this problem was to create 
+another variant of graph were nodes are directed from right to left and from bottom
+to down. But it still don't perfect. The best would be to direct every grpah manually,
+but it's not an appropriate solution because it's too long.
 
-d[n](i,j) = min(d[n-1](i,n) + d[n-1](n,j), d[n-1](i,j))
+-lounch the programm
+-choose algorithm
+-choose revesed or straight graph(dependes on location of the starting node)
+-enter weights of edges
+-enter starting node
+-enter final node
 
+Floyd's algorithm
+
+   At first take a look at screenshot in floder Tasks, named Floyd's task.jpg
+Fortunatelly, this graph looks better, and there is no pain in ass with
+directing edges, so no errors in result. 
+   There is possible '*' instead of number, it means that this edge isn't exist,
+so you can easily enter * and program will define. 
+
+-lounch the programm
+-choose algorithm
+-enter all values
+
+
+ 
